@@ -50,3 +50,10 @@ src/arm-none-eabi
 
 # clangd
 .cache/
+
+# personal stuff
+/post_build.sh
+/node_modules/
+/package.json
+/package-lock.json
+/compile_commands.json
