@@ -79,7 +79,7 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   btnPrev->user_data = this;
   lv_obj_set_event_cb(btnPrev, event_handler);
   lv_obj_set_size(btnPrev, button_dimension, button_dimension);
-  lv_obj_align(btnPrev, nullptr, LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
+  lv_obj_align(btnPrev, nullptr, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
   lv_obj_add_style(btnPrev, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnPrev, nullptr);
   lv_label_set_text_static(label, Symbols::stepBackward);
@@ -88,7 +88,7 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   btnNext->user_data = this;
   lv_obj_set_event_cb(btnNext, event_handler);
   lv_obj_set_size(btnNext, button_dimension, button_dimension);
-  lv_obj_align(btnNext, nullptr, LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0);
+  lv_obj_align(btnNext, nullptr, LV_ALIGN_OUT_BOTTOM_RIGHT, 0, 0);
   lv_obj_add_style(btnNext, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnNext, nullptr);
   lv_label_set_text_static(label, Symbols::stepForward);
