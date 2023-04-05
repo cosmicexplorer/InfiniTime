@@ -222,7 +222,7 @@ bool SystemInfo::sortById(const TaskStatus_t& lhs, const TaskStatus_t& rhs) {
 }
 
 std::unique_ptr<Screen> SystemInfo::CreateScreen4() {
-  static constexpr uint8_t maxTaskCount = 9;
+  static constexpr uint8_t maxTaskCount = 16;
   TaskStatus_t tasksStatus[maxTaskCount];
 
   lv_obj_t* infoTask = lv_table_create(lv_scr_act(), nullptr);
