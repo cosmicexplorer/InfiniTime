@@ -5,17 +5,26 @@
 
 set -euo pipefail
 
+export NO_INTERNET="${NO_INTERNET:-}"
+
+function exec-if-internet {
+  if [[ "$NO_INTERNET" == 'y' ]]; then
+    return 0
+  fi
+  "$@"
+}
+
 ## (1) Install python dependencies.
 export PY=python3
 
-"$PY" -m venv .venv/
+exec-if-internet "$PY" -m venv .venv/
 
 source .venv/bin/activate
 
-"$PY" -m pip install wheel adafruit-nrfutil -r tools/mcuboot/requirements.txt
+exec-if-internet "$PY" -m pip install wheel adafruit-nrfutil -r tools/mcuboot/requirements.txt
 
 ## (2) Install js dependencies.
-npm install lv_{font,img}_conv swc
+exec-if-internet npm install lv_{font,img}_conv swc
 
 ## (3) Execute cmake.
 mkdir -pv build/
