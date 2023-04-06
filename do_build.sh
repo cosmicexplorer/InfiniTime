@@ -3,7 +3,7 @@
 # FIXME: create a spack recipe for infinitime which installs these python and js deps and builds the
 # cmake project!
 
-set -euo pipefail
+set -eux
 
 export NO_INTERNET="${NO_INTERNET:-}"
 
