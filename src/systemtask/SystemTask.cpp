@@ -234,6 +234,7 @@ void SystemTask::Work() {
           state = SystemTaskState::GoingToSleep; // Already set in PushMessage()
           NRF_LOG_INFO("[systemtask] Going to sleep");
           displayApp.PushMessage(Pinetime::Applications::Display::Messages::GoToSleep);
+          /* FIXME: Do not stop measuring when we go to sleep! Convert into BLE task! */
           heartRateApp.PushMessage(Pinetime::Applications::HeartRateTask::Messages::GoToSleep);
           break;
         case Messages::OnNewTime:
