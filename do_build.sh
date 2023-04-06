@@ -29,7 +29,7 @@ exec-if-internet npm install lv_{font,img}_conv swc
 ## (3) Execute cmake.
 mkdir -pv build/
 
-function configured_cmake {
+function configured-cmake {
   cmake \
     -S . \
     -B build/ \
@@ -41,20 +41,17 @@ function configured_cmake {
     "$@"
 }
 
-
-function get_project_version {
-  configured_cmake -L 2>&1 \
+function get-project-version-from-cmake {
+  configured-cmake -L 2>&1 \
     | sed -rne 's#^.*Version : (.+)$#\1#gp'
 }
 
-project_version="$(get_project_version)"
-
 # Execute cmake to generate the Makefile.
-configured_cmake
+readonly project_version="$(get-project-version-from-cmake)"
 
 ## (4) Execute make.
 make -C build/ -j"${MAKE_JOBS:-12}" pinetime-mcuboot-app
 
-result="build/src/pinetime-mcuboot-app-dfu-${project_version}.zip"
+readonly result="build/src/pinetime-mcuboot-app-dfu-${project_version}.zip"
 
 ln -sfv "$result" current-dfu
