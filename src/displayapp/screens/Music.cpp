@@ -55,12 +55,15 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   lv_style_set_bg_color(&btn_style, LV_STATE_DEFAULT, LV_COLOR_AQUA);
   lv_style_set_bg_opa(&btn_style, LV_STATE_DEFAULT, LV_OPA_50);
 
-  static const lv_coord_t button_dimension = 50;
+  static const lv_coord_t BUTTON_DIMENSION = 60;
+  /* NB: We don't have any extra space with four buttons in a row, but this can be modified for
+     alternative layout schemes. */
+  static const lv_coord_t BUTTON_SEPARATOR = 0;
 
   btnVolDown = lv_btn_create(lv_scr_act(), nullptr);
   btnVolDown->user_data = this;
   lv_obj_set_event_cb(btnVolDown, event_handler);
-  lv_obj_set_size(btnVolDown, button_dimension, button_dimension);
+  lv_obj_set_size(btnVolDown, BUTTON_DIMENSION, BUTTON_DIMENSION);
   lv_obj_align(btnVolDown, nullptr, LV_ALIGN_IN_BOTTOM_LEFT, 0, 0);
   lv_obj_add_style(btnVolDown, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnVolDown, nullptr);
@@ -69,7 +72,7 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   btnVolUp = lv_btn_create(lv_scr_act(), nullptr);
   btnVolUp->user_data = this;
   lv_obj_set_event_cb(btnVolUp, event_handler);
-  lv_obj_set_size(btnVolUp, button_dimension, button_dimension);
+  lv_obj_set_size(btnVolUp, BUTTON_DIMENSION, BUTTON_DIMENSION);
   lv_obj_align(btnVolUp, nullptr, LV_ALIGN_IN_BOTTOM_RIGHT, 0, 0);
   lv_obj_add_style(btnVolUp, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnVolUp, nullptr);
@@ -78,8 +81,8 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   btnPrev = lv_btn_create(lv_scr_act(), nullptr);
   btnPrev->user_data = this;
   lv_obj_set_event_cb(btnPrev, event_handler);
-  lv_obj_set_size(btnPrev, button_dimension, button_dimension);
-  lv_obj_align(btnPrev, nullptr, LV_ALIGN_OUT_BOTTOM_LEFT, 0, 0);
+  lv_obj_set_size(btnPrev, BUTTON_DIMENSION, BUTTON_DIMENSION);
+  lv_obj_align(btnPrev, btnVolDown, LV_ALIGN_OUT_RIGHT_MID, BUTTON_SEPARATOR, 0);
   lv_obj_add_style(btnPrev, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnPrev, nullptr);
   lv_label_set_text_static(label, Symbols::stepBackward);
@@ -87,8 +90,8 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   btnNext = lv_btn_create(lv_scr_act(), nullptr);
   btnNext->user_data = this;
   lv_obj_set_event_cb(btnNext, event_handler);
-  lv_obj_set_size(btnNext, button_dimension, button_dimension);
-  lv_obj_align(btnNext, nullptr, LV_ALIGN_OUT_BOTTOM_RIGHT, 0, 0);
+  lv_obj_set_size(btnNext, BUTTON_DIMENSION, BUTTON_DIMENSION);
+  lv_obj_align(btnNext, btnVolUp, LV_ALIGN_OUT_LEFT_MID, -BUTTON_SEPARATOR, 0);
   lv_obj_add_style(btnNext, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnNext, nullptr);
   lv_label_set_text_static(label, Symbols::stepForward);
@@ -96,7 +99,7 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   btnPlayPause = lv_btn_create(lv_scr_act(), nullptr);
   btnPlayPause->user_data = this;
   lv_obj_set_event_cb(btnPlayPause, event_handler);
-  lv_obj_set_size(btnPlayPause, button_dimension, button_dimension);
+  lv_obj_set_size(btnPlayPause, BUTTON_DIMENSION, BUTTON_DIMENSION);
   lv_obj_align(btnPlayPause, nullptr, LV_ALIGN_IN_BOTTOM_MID, 0, 0);
   lv_obj_add_style(btnPlayPause, LV_STATE_DEFAULT, &btn_style);
   txtPlayPause = lv_label_create(btnPlayPause, nullptr);
