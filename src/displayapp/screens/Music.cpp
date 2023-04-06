@@ -55,7 +55,7 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   lv_style_set_bg_color(&btn_style, LV_STATE_DEFAULT, LV_COLOR_AQUA);
   lv_style_set_bg_opa(&btn_style, LV_STATE_DEFAULT, LV_OPA_50);
 
-  static const lv_coord_t BUTTON_DIMENSION = 60;
+  static const lv_coord_t BUTTON_DIMENSION = 76;
   /* NB: We don't have any extra space with four buttons in a row, but this can be modified for
      alternative layout schemes. */
   static const lv_coord_t BUTTON_SEPARATOR = 0;
@@ -86,6 +86,8 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   lv_obj_add_style(btnPrev, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnPrev, nullptr);
   lv_label_set_text_static(label, Symbols::stepBackward);
+  /* Hide this, because swiping left already does this. */
+  lv_obj_set_hidden(btnPrev, true);
 
   btnNext = lv_btn_create(lv_scr_act(), nullptr);
   btnNext->user_data = this;
@@ -95,6 +97,8 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   lv_obj_add_style(btnNext, LV_STATE_DEFAULT, &btn_style);
   label = lv_label_create(btnNext, nullptr);
   lv_label_set_text_static(label, Symbols::stepForward);
+  /* Hide this, because swiping right already does this. */
+  lv_obj_set_hidden(btnNext, true);
 
   btnPlayPause = lv_btn_create(lv_scr_act(), nullptr);
   btnPlayPause->user_data = this;
@@ -104,8 +108,6 @@ Music::Music(Pinetime::Controllers::MusicService& music) : musicService(music) {
   lv_obj_add_style(btnPlayPause, LV_STATE_DEFAULT, &btn_style);
   txtPlayPause = lv_label_create(btnPlayPause, nullptr);
   lv_label_set_text_static(txtPlayPause, Symbols::play);
-  /* Headphones already make play/pause easy. */
-  lv_obj_set_hidden(btnPlayPause, true);
 
   txtTrackDuration = lv_label_create(lv_scr_act(), nullptr);
   lv_label_set_long_mode(txtTrackDuration, LV_LABEL_LONG_SROLL);
