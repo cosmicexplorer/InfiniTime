@@ -36,7 +36,16 @@ MEMORY
   FLASH (rx) : ORIGIN = APP_OFFSET, LENGTH = APP_SIZE
   /* SCRATCH (r) : ORIGIN = SCRATCH_OFFSET, LENGTH = SCRATCH_SIZE */
   SPARE_SPACE (r) : ORIGIN = SCRATCH_OFFSET + SCRATCH_SIZE, LENGTH = 12K
-  RAM (rwx) :  ORIGIN = 0x20000000, LENGTH = 64K
+  /* True LENGTH remains under 64K, but RAM length calculation in the cross-compiler's ld */
+  /* appears to interpret "64K" as 64000 bytes, instead of adding the extra to conform to a power */
+  /* of 2 or whatever the hard drive companies' trick is. When this is (correctly) set to 64K: */
+  /*              RAM:       64628 B        64 KB     98.61% */
+  /* Note that the used bytes exceed 64000, and we get the error: */
+  /* .../arm-none-eabi/bin/ld: region RAM overflowed with stack */
+  /* When LENGTH is set to 65K, we get: */
+  /*              RAM:       64628 B        65 KB     97.10% */
+  /* and the final link of the firmware succeeds. */
+  RAM (rwx) :  ORIGIN = 0x20000000, LENGTH = 65K
 }
 
 SECTIONS
